@@ -31,16 +31,50 @@ url_old <- "https://registrar.fas.harvard.edu/files/fas-registrar/files/class_en
 # destfile assumes you're already in the directory, so you're just specifying
 # how you want to call the downloaded file
 
-download.file(url = url_current, destfile = "current.xlsx")
-
-download.file(url = url_old, destfile = "old.xlsx")
+# download.file(url = url_current, destfile = "current.xlsx")
+# 
+# download.file(url = url_old, destfile = "old.xlsx")
 
 
 # read the excel file into the environment
 
 
-current <- read_excel("current.xlsx")
+current <- read_excel("class_enrollment_summary_by_term_2.25.20_0.xlsx", 
+                skip = 3) %>%
+  clean_names() %>%
+  
+  # filter out NA observations in course_name
+  
+  filter(! is.na(course_name))
 
+
+# do it for old
+
+old <- read_excel("class_enrollment_summary_by_term_3.22.19_0.xlsx", 
+                  skip = 3) %>%
+  clean_names() %>%
+  filter(! is.na(course_name)) %>%
+  select(course_id)
+
+```
+
+
+```{r, echo = FALSE}
+
+
+# Bring the data together, using course_id, but only keep courses which are
+# new this year, meaning that course_id did not exist in spring 2019
+
+x <- current %>%
+  anti_join(old, by = "course_id")
+
+
+# figure out five largest courses
+
+top5 <- x %>%
+  arrange(desc(total)) %>%
+  select(course_name, total) %>%
+  slice(1:5)
 
 ```
 
