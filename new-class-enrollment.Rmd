@@ -14,10 +14,12 @@ library(tidyverse)
 library(janitor)
 library(reprex)
 library(utils)
+library(googlesheets4)
+library(fs)
 
 ```
 
-```{r, echo=FALSE}
+```{r download_data, include =FALSE}
 
 # download file using download.file()
 
@@ -34,6 +36,12 @@ download.file(url = url_current, destfile = "current.xlsx")
 download.file(url = url_old, destfile = "old.xlsx")
 
 
+# read the excel file into the environment
+
+
+current <- read_excel("current.xlsx")
+
+
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
