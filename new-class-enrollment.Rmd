@@ -1,0 +1,39 @@
+---
+title: "New Class Enrollment"
+author: "Brian Kim"
+date: "03/03/2020"
+output: html_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+library(readxl)
+library(tidyverse)
+library(janitor)
+library(reprex)
+library(utils)
+
+```
+
+```{r, echo=FALSE}
+
+# download file using download.file()
+
+
+url_current <- "https://registrar.fas.harvard.edu/files/fas-registrar/files/class_enrollment_summary_by_term_2.25.20_0.xlsx"
+
+url_old <- "https://registrar.fas.harvard.edu/files/fas-registrar/files/class_enrollment_summary_by_term_3.22.19_0.xlsx"
+
+# destfile assumes you're already in the directory, so you're just specifying
+# how you want to call the downloaded file
+
+download.file(url = url_current, destfile = "current.xlsx")
+
+download.file(url = url_old, destfile = "old.xlsx")
+
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
