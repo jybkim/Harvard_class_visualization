@@ -16,6 +16,7 @@ library(reprex)
 library(utils)
 library(googlesheets4)
 library(fs)
+library(ggpubr)
 
 ```
 
@@ -78,4 +79,23 @@ top5 <- x %>%
 
 ```
 
+```{r, echo = FALSE}
 
+# Visualisation of the Five Largest Courses
+
+graphtop5 <- ggplot(top5, aes(x = course_name, y = total)) + 
+  geom_bar(stat = "identity") + 
+  theme_classic() +
+  theme(axis.text.x=element_text(angle = -45, hjust = 0)) + 
+  labs(
+    title = "Top 5 Course Enrollment", 
+    subtitle = "As of February 25, 2020", 
+    caption = "Data from Harvard Registrar's Office", 
+    y = "Number of Students", x = "Course Name"
+  )
+
+
+graphtop5 %>%
+  ggexport(filename = "graphtop5.png")
+
+```
